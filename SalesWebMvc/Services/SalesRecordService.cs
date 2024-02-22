@@ -46,12 +46,17 @@ namespace SalesWebMvc.Services
             {
                 result = result.Where(x => x.Date <= maxDate.Value);
             }
-            return await result
-                .Include(x => x.Seller)
-                .Include(x => x.Seller.Department)
-                .OrderByDescending(x => x.Date)
-                .GroupBy(x => x.Seller.Department)
-                .ToListAsync();
+            var data = await result
+
+               .Include(x => x.Seller)
+
+               .Include(x => x.Seller.Department)
+
+               .OrderByDescending(x => x.Date)
+
+               .ToListAsync();
+
+            return data.GroupBy(x => x.Seller.Department).ToList();
         }
     }
 }
